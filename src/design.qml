@@ -11,6 +11,7 @@ Item {
 
     /* SIGNALS */
 
+    signal changeColor
 
     /* DESIGN */
 
@@ -43,6 +44,10 @@ Item {
                         color: "white"
 
                     }
+
+                    onClicked: {
+                        choosenColor.color = "white"
+                    }
                 }
 
                 Button { id: button2
@@ -53,7 +58,10 @@ Item {
 
                     background: Rectangle {
                         color: "black"
-                        opacity: enabled ? 1 : 0.3
+                    }
+
+                    onClicked: {
+                        choosenColor.color = "black"
                     }
                 }
 
@@ -66,6 +74,10 @@ Item {
                     background: Rectangle {
                         color: "#eeff00" // yellow
                     }
+
+                    onClicked: {
+                        choosenColor.color = "#eeff00"
+                    }
                 }
 
                 Button { id: button4
@@ -76,6 +88,10 @@ Item {
 
                     background: Rectangle {
                         color: "red"
+                    }
+
+                    onClicked: {
+                        choosenColor.color = "red"
                     }
                 }
 
@@ -88,6 +104,10 @@ Item {
                     background: Rectangle {
                         color: "blue"
                     }
+
+                    onClicked: {
+                        choosenColor.color = "blue"
+                    }
                 }
 
                 Button { id: button6
@@ -98,6 +118,10 @@ Item {
 
                     background: Rectangle {
                         color: "#630051" // violet
+                    }
+
+                    onClicked: {
+                        choosenColor.color = "#630051"
                     }
                 }
             }
@@ -142,6 +166,7 @@ Item {
                 text: "Color: "
             }
             Rectangle {
+                id: choosenColor
                 Layout.preferredWidth: 30
                 Layout.preferredHeight: 30
                 color: "white"
