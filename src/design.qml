@@ -11,8 +11,6 @@ Item {
 
     /* SIGNALS */
 
-    signal changeColor
-
     /* DESIGN */
 
     Rectangle { id: menu
@@ -46,7 +44,7 @@ Item {
                     }
 
                     onClicked: {
-                        choosenColor.color = "white"
+                        chosenColor.color = "white"
                     }
                 }
 
@@ -61,7 +59,7 @@ Item {
                     }
 
                     onClicked: {
-                        choosenColor.color = "black"
+                        chosenColor.color = "black"
                     }
                 }
 
@@ -76,7 +74,7 @@ Item {
                     }
 
                     onClicked: {
-                        choosenColor.color = "#eeff00"
+                        chosenColor.color = "#eeff00"
                     }
                 }
 
@@ -91,7 +89,7 @@ Item {
                     }
 
                     onClicked: {
-                        choosenColor.color = "red"
+                        chosenColor.color = "red"
                     }
                 }
 
@@ -106,7 +104,7 @@ Item {
                     }
 
                     onClicked: {
-                        choosenColor.color = "blue"
+                        chosenColor.color = "blue"
                     }
                 }
 
@@ -121,7 +119,7 @@ Item {
                     }
 
                     onClicked: {
-                        choosenColor.color = "#630051"
+                        chosenColor.color = "#630051"
                     }
                 }
             }
@@ -162,15 +160,20 @@ Item {
                 }
             }
 
-            TextArea {
-                text: "Color: "
-            }
-            Rectangle {
-                id: choosenColor
-                Layout.preferredWidth: 30
-                Layout.preferredHeight: 30
-                color: "white"
-                border.color: "black"
+            RowLayout { id: row
+                Layout.alignment: Qt.AlignVCenter
+                spacing: 10
+
+                TextArea {
+                    text: "Color: "
+                }
+                Rectangle {
+                    id: chosenColor
+                    Layout.preferredWidth: 40
+                    Layout.preferredHeight: 40
+                    color: "white"
+                    border.color: "black"
+                }
             }
         }
     }
