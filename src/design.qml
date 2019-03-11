@@ -19,14 +19,13 @@ Item {
         color: "#fffa9e"
 
         ColumnLayout { id: col
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignTop
             spacing: 15
             /*
             anchors.centerIn: parent
             */
 
             Rectangle {
-                Layout.alignment: Qt.AlignCenter
                 Layout.preferredWidth: main.width - 10
                 Layout.preferredHeight: 30
                 color: "white"
@@ -126,7 +125,6 @@ Item {
 
             Rectangle {
                 id: rectangleShapes
-//                Layout.alignment: Qt.AlignCenter
                 Layout.preferredWidth: main.width - 10
                 Layout.preferredHeight: menu.width / 3
                 color: "white"
@@ -161,7 +159,7 @@ Item {
             }
 
             RowLayout { id: row
-                Layout.alignment: Qt.AlignVCenter
+                Layout.alignment: Qt.AlignHCenter
                 spacing: 10
 
                 TextArea {

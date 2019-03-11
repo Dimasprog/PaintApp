@@ -1,8 +1,7 @@
 import sys
-from PyQt5.QtCore import QUrl, pyqtSlot, QRectF
+from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtQuickWidgets import QQuickWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, \
-    QGraphicsRectItem
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene
 
 
 class Window(QWidget):
@@ -42,15 +41,11 @@ class Window(QWidget):
         box_layout = QHBoxLayout()
         box_layout.addWidget(view)
         box_layout.addWidget(self.quick)
-
         self.setLayout(box_layout)
-
-
 
     def handleStatusChange(self, status):
         if status == self.quick.Error:
             [print(e.toString()) for e in self.quick.errors()]
-
 
 
 app = QApplication(sys.argv)
