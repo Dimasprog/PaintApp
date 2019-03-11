@@ -137,11 +137,16 @@ Item {
                     height: rectangleShapes.height - 2
                 }
             }
-            Button {
-                Layout.alignment: Qt.AlignCenter
-                text: "asdv"
-            }
 
+            TextArea {
+                text: "Color: "
+            }
+            Rectangle {
+                Layout.preferredWidth: 30
+                Layout.preferredHeight: 30
+                color: "white"
+                border.color: "black"
+            }
         }
     }
 }
