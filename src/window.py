@@ -52,6 +52,7 @@ class Window(QWidget):
             [print(e.toString()) for e in self.quick.errors()]
 
 
+
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
