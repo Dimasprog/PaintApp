@@ -29,6 +29,21 @@ Item {
                 Layout.preferredHeight: 30
                 color: "white"
                 border.color: "black"
+
+                Button {
+                    id: button1
+                    x: parent.x + 1
+                    y: parent.y + 1
+                    width: parent.width / 6 - 2
+                    height: parent.height - 2
+                }
+
+                Button {
+                    x: button1.x + parent.width / 6 - 2
+                    y: button1.y
+                    width: parent.width / 6 - 2
+                    height: parent.height - 2
+                }
             }
 
             Rectangle {
