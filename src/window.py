@@ -1,13 +1,13 @@
 import sys
-from PyQt5.QtCore import QUrl, Qt, pyqtSignal
+from PyQt5.QtCore import QUrl, Qt, pyqtSignal, pyqtSlot, QRectF, QLineF
+from PyQt5.QtGui import QPen, QPainter, QColor
 from PyQt5.QtQuickWidgets import QQuickWidget
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, \
+    QGraphicsItem, QGraphicsLineItem
 
 
 class Window(QWidget):
     RIGHT_SIDEBAR_VIEW_PATH = "design.qml"
-
-    clearAll = pyqtSignal()
 
     def __init__(self):
         QWidget.__init__(self)
@@ -24,8 +24,13 @@ class Window(QWidget):
         self.quick = QQuickWidget()
         self.quick.setSource(QUrl().fromLocalFile(Window.RIGHT_SIDEBAR_VIEW_PATH))
         self.quick.setResizeMode(QQuickWidget.SizeRootObjectToView)
+        self._rectangle = self.quick.rootObject()
+        self._line = self.quick.rootObject()
 
     def _connect_ui(self):
+        self._rectangle.drawRectangle.connect(self._drawRectangle)
+        self._line.drawLine.connect(self._drawLine)
+
         self.quick.statusChanged.connect(self.handleStatusChange)
 
     def _init_window(self):
@@ -42,8 +47,28 @@ class Window(QWidget):
         if status == self.quick.Error:
             [print(e.toString()) for e in self.quick.errors()]
 
+    @pyqtSlot(str)
+    def _drawRectangle(self, color):
+        print(color)
+        rect = QRectF(50, 50, 100, 100)
+        rect_item = QGraphicsRectItem(rect)
+        rect_item.setFlag(QGraphicsItem.ItemIsMovable, True)
+        self.scene.addItem(rect_item)
+
+    @pyqtSlot(str)
+    def _drawLine(self, color):
+        print(color)
+        pen = QPen(QColor(color), 3)
+        line = QGraphicsLineItem(QLineF(500, 5000, 100, 100))
+        line.setPen(pen)
+        line_item = QGraphicsLineItem(line)
+        line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
+        self.scene.addItem(line_item)
+
+    @pyqtSlot()
     def _clearAll(self):
-        print("Done!")
+        pass
+
 
 
 app = QApplication(sys.argv)

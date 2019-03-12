@@ -11,7 +11,9 @@ Item {
 
     /* SIGNALS */
 
-    signal clearAll()
+    signal drawRectangle(string s_color)
+    signal drawLine(string s_color)
+
 
     /* DESIGN */
 
@@ -134,6 +136,11 @@ Item {
                     y: + 1
                     width: rectangleShapes.width / 3 - 2
                     height: rectangleShapes.height - 2
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: drawRectangle(chosenColor.color)
+                    }
                 }
 
                 Button {
@@ -143,6 +150,11 @@ Item {
                     y: + 1
                     width: rectangleShapes.width / 3 - 2
                     height: rectangleShapes.height - 2
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: drawLine(chosenColor.color)
+                    }
                 }
 
                 Button {
@@ -152,6 +164,11 @@ Item {
                     y: + 1
                     width: rectangleShapes.width / 3 - 2
                     height: rectangleShapes.height - 2
+
+//                    MouseArea {
+//                        anchors.fill: parent
+//                        onClicked: drawBrush(chosenColor.color)
+//                    }
                 }
             }
 
