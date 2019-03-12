@@ -5,8 +5,6 @@ from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, \
     QGraphicsItem, QGraphicsLineItem
 
-# Hello
-
 
 class Window(QWidget):
     RIGHT_SIDEBAR_VIEW_PATH = "design.qml"
