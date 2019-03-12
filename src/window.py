@@ -35,6 +35,8 @@ class Window(QWidget):
 
     def _init_window(self):
         self.scene = QGraphicsScene()
+        self.scene.changed.connect(self.onChange)
+
         view = QGraphicsView(self.scene, self)
         view.show()
 
@@ -42,6 +44,9 @@ class Window(QWidget):
         box_layout.addWidget(view)
         box_layout.addWidget(self.quick)
         self.setLayout(box_layout)
+
+    def onChange(self):
+        print("change")
 
     def handleStatusChange(self, status):
         if status == self.quick.Error:
