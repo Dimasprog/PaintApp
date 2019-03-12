@@ -1,11 +1,13 @@
 import sys
-from PyQt5.QtCore import QUrl, Qt
+from PyQt5.QtCore import QUrl, Qt, pyqtSignal
 from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene
 
 
 class Window(QWidget):
     RIGHT_SIDEBAR_VIEW_PATH = "design.qml"
+
+    clearAll = pyqtSignal()
 
     def __init__(self):
         QWidget.__init__(self)
@@ -22,15 +24,8 @@ class Window(QWidget):
         self.quick = QQuickWidget()
         self.quick.setSource(QUrl().fromLocalFile(Window.RIGHT_SIDEBAR_VIEW_PATH))
         self.quick.setResizeMode(QQuickWidget.SizeRootObjectToView)
-        # self._quick = self.quick.rootObject()
-        # self._delete = self.quick.rootObject()
-        # self._clear = self.quick.rootObject()
 
     def _connect_ui(self):
-        # self._quick.drawRect.connect(self._drawRect)
-        # self._quick.deleteItem.connect(self._deleteItem)
-        # self._quick.clearAll.connect(self._clearAll)
-
         self.quick.statusChanged.connect(self.handleStatusChange)
 
     def _init_window(self):
@@ -46,6 +41,9 @@ class Window(QWidget):
     def handleStatusChange(self, status):
         if status == self.quick.Error:
             [print(e.toString()) for e in self.quick.errors()]
+
+    def _clearAll(self):
+        print("Done!")
 
 
 app = QApplication(sys.argv)

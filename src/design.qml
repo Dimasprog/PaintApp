@@ -11,20 +11,18 @@ Item {
 
     /* SIGNALS */
 
+    signal clearAll()
+
     /* DESIGN */
 
     Rectangle { id: menu
-        width: 220
-        height: main.height
+        width: parent.width
+        height: parent.height
         color: "#fffa9e"
 
         ColumnLayout { id: col
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignTop
             spacing: 15
-            /*
-            anchors.centerIn: parent
-            */
-
+            anchors.horizontalCenter: parent.horizontalCenter
             Rectangle {
                 Layout.preferredWidth: main.width - 10
                 Layout.preferredHeight: 30
@@ -123,11 +121,10 @@ Item {
                 }
             }
 
-            Rectangle {
-                id: rectangleShapes
+            Rectangle { id: rectangleShapes
                 Layout.preferredWidth: main.width - 10
                 Layout.preferredHeight: menu.width / 3
-                color: "white"
+                color: "black"
                 border.color: "black"
 
                 Button {
@@ -158,19 +155,36 @@ Item {
                 }
             }
 
-            RowLayout { id: row
+            RowLayout { id: squareDisplayColor
                 Layout.alignment: Qt.AlignHCenter
                 spacing: 10
 
                 TextArea {
                     text: "Color: "
                 }
-                Rectangle {
-                    id: chosenColor
+                Rectangle { id: chosenColor
                     Layout.preferredWidth: 40
                     Layout.preferredHeight: 40
                     color: "white"
                     border.color: "black"
+                    radius: 20
+                }
+            }
+
+            Rectangle { id: clearAllButtonSection
+                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: parent.width - 10
+                Layout.preferredHeight: 30
+
+                Button { id: clearAllBtn
+                    width: parent.width
+                    height: 30
+                    text: "Clear All"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: clearAll()
                 }
             }
         }
