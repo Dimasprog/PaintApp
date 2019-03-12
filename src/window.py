@@ -72,7 +72,9 @@ class Window(QWidget):
 
     @pyqtSlot()
     def _clearAll(self):
-        pass
+        if self.scene:
+            list = self.scene.items()
+        print(list)
 
 
 
