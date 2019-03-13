@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtCore import QUrl, Qt, pyqtSignal, pyqtSlot, QRectF, QLineF
-from PyQt5.QtGui import QPen, QPainter, QColor
+from PyQt5.QtGui import QPen, QPainter, QColor, QPainterPath
 from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, \
     QGraphicsItem, QGraphicsLineItem
@@ -17,6 +17,9 @@ class Window(QWidget):
         self.resize(860, 520)
 
         self.justDoubleClicked = False
+        self.brushSelected = False
+        self.path = QPainterPath()
+        # self.setMouseTracking(True)
 
         self._define_ui()
         self._init_window()
@@ -27,6 +30,7 @@ class Window(QWidget):
         self.quick = QQuickWidget()
         self.quick.setSource(QUrl().fromLocalFile(Window.RIGHT_SIDEBAR_VIEW_PATH))
         self.quick.setResizeMode(QQuickWidget.SizeRootObjectToView)
+
         self._rectangle = self.quick.rootObject()
         self._line = self.quick.rootObject()
         self._clear = self.quick.rootObject()
@@ -38,14 +42,15 @@ class Window(QWidget):
 
         self.quick.statusChanged.connect(self.handleStatusChange)
 
+    # scene-----------------------------------------------------------------------------
     def _init_window(self):
-        self.scene = QGraphicsScene()
+        self.scene = QGraphicsScene(self)
 
-        view = QGraphicsView(self.scene, self)
-        view.show()
+        self.view = QGraphicsView(self.scene, self)
+        # self.view.setMouseTracking(True)
 
         box_layout = QHBoxLayout()
-        box_layout.addWidget(view)
+        box_layout.addWidget(self.view)
         box_layout.addWidget(self.quick)
         self.setLayout(box_layout)
 
@@ -88,10 +93,25 @@ class Window(QWidget):
         self.update()
 
     def mousePressEvent(self, event):
-        print(event)
+        self.path.moveTo(event.pos())
+        self.update()
 
     def mouseMoveEvent(self, event):
-        print("Moved")
+        # self.path.lineTo(event.pos())
+        # self.newPoint.emit(event.pos())
+        # self.update()
+
+        globalPos = self.mapToGlobal(event.pos())
+        print("The mouse is at\nQPoint({0}, {1}) in widget coords, and\n QPoint({2}, {3}) in screen coords".format(
+            event.pos().x(), event.pos().y(), globalPos.x(),
+            globalPos.y()))
+        self.update()
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.drawPath(self.path)
+
+
 
 
 app = QApplication(sys.argv)
