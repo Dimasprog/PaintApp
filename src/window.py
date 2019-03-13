@@ -52,19 +52,19 @@ class Window(QWidget):
 
     @pyqtSlot(str)
     def _drawRectangle(self, color):
-        print(color)
+        pen = QPen(QColor(color), 10)
         rect = QRectF(50, 50, 100, 100)
         rect_item = QGraphicsRectItem(rect)
+        rect_item.setPen(pen)
         rect_item.setFlag(QGraphicsItem.ItemIsMovable, True)
         self.scene.addItem(rect_item)
 
     @pyqtSlot(str)
     def _drawLine(self, color):
-        print(color)
-        pen = QPen(QColor(color), 3)
-        line = QGraphicsLineItem(QLineF(500, 5000, 100, 100))
-        line.setPen(pen)
+        pen = QPen(QColor(color), 10)
+        line = QLineF(10, 10, 100, 100)
         line_item = QGraphicsLineItem(line)
+        line_item.setPen(pen)
         line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
         self.scene.addItem(line_item)
 
@@ -73,6 +73,7 @@ class Window(QWidget):
         if self.scene:
             list = self.scene.items()
         print(list)
+
 
 
 app = QApplication(sys.argv)
