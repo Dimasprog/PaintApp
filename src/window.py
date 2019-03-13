@@ -28,10 +28,12 @@ class Window(QWidget):
         self.quick.setResizeMode(QQuickWidget.SizeRootObjectToView)
         self._rectangle = self.quick.rootObject()
         self._line = self.quick.rootObject()
+        self._clear = self.quick.rootObject()
 
     def _connect_ui(self):
         self._rectangle.drawRectangle.connect(self._drawRectangle)
         self._line.drawLine.connect(self._drawLine)
+        self._clear.clearAll.connect(self._clearAll)
 
         self.quick.statusChanged.connect(self.handleStatusChange)
 
@@ -52,7 +54,7 @@ class Window(QWidget):
 
     @pyqtSlot(str)
     def _drawRectangle(self, color):
-        pen = QPen(QColor(color), 10)
+        pen = QPen(QColor(color), 7)
         rect = QRectF(50, 50, 100, 100)
         rect_item = QGraphicsRectItem(rect)
         rect_item.setPen(pen)
@@ -61,7 +63,7 @@ class Window(QWidget):
 
     @pyqtSlot(str)
     def _drawLine(self, color):
-        pen = QPen(QColor(color), 10)
+        pen = QPen(QColor(color), 7)
         line = QLineF(10, 10, 100, 100)
         line_item = QGraphicsLineItem(line)
         line_item.setPen(pen)
@@ -72,7 +74,8 @@ class Window(QWidget):
     def _clearAll(self):
         if self.scene:
             list = self.scene.items()
-        print(list)
+            for l in list:
+                self.scene.removeItem(l)
 
 
 

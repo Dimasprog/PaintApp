@@ -13,6 +13,7 @@ Item {
 
     signal drawRectangle(string s_color)
     signal drawLine(string s_color)
+    signal clearAll()
 
 
     /* DESIGN */
