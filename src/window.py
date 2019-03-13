@@ -1,11 +1,10 @@
 import sys
+
 from PyQt5.QtCore import QUrl, Qt, pyqtSignal, pyqtSlot, QRectF, QLineF
 from PyQt5.QtGui import QPen, QPainter, QColor
 from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, \
     QGraphicsItem, QGraphicsLineItem
-
-# Hello
 
 
 class Window(QWidget):
@@ -16,6 +15,8 @@ class Window(QWidget):
         self.top = 50
         self.left = 100
         self.resize(860, 520)
+
+        self.justDoubleClicked = False
 
         self._define_ui()
         self._init_window()
@@ -54,7 +55,7 @@ class Window(QWidget):
 
     @pyqtSlot(str)
     def _drawRectangle(self, color):
-        pen = QPen(QColor(color), 7)
+        pen = QPen(QColor(color), 4)
         rect = QRectF(50, 50, 100, 100)
         rect_item = QGraphicsRectItem(rect)
         rect_item.setPen(pen)
@@ -63,7 +64,7 @@ class Window(QWidget):
 
     @pyqtSlot(str)
     def _drawLine(self, color):
-        pen = QPen(QColor(color), 7)
+        pen = QPen(QColor(color), 4)
         line = QLineF(10, 10, 100, 100)
         line_item = QGraphicsLineItem(line)
         line_item.setPen(pen)
@@ -77,9 +78,22 @@ class Window(QWidget):
             for l in list:
                 self.scene.removeItem(l)
 
+    def resizeEvent(self, event):
+        print("Resized to QSize({0}, {1})".format(event.size().width(), event.size().height()))
+        self.update()
+
+    def mouseDoubleClickEvent(self, event):
+        self.justDoubleClicked = True
+        print("Double click.")
+        self.update()
+
+    def mousePressEvent(self, event):
+        print(event)
+
+    def mouseMoveEvent(self, event):
+        print("Moved")
 
 
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec_())
-

@@ -15,7 +15,6 @@ Item {
     signal drawLine(string s_color)
     signal clearAll()
 
-
     /* DESIGN */
 
     Rectangle { id: menu
@@ -40,7 +39,6 @@ Item {
 
                     background: Rectangle {
                         color: "white"
-
                     }
 
                     onClicked: {
@@ -166,10 +164,6 @@ Item {
                     width: rectangleShapes.width / 3 - 2
                     height: rectangleShapes.height - 2
 
-//                    MouseArea {
-//                        anchors.fill: parent
-//                        onClicked: drawBrush(chosenColor.color)
-//                    }
                 }
             }
 
@@ -183,7 +177,7 @@ Item {
                 Rectangle { id: chosenColor
                     Layout.preferredWidth: 40
                     Layout.preferredHeight: 40
-                    color: "white"
+                    color: "black"
                     border.color: "black"
                     radius: 20
                 }
@@ -193,7 +187,6 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredWidth: parent.width - 10
                 Layout.preferredHeight: 30
-
                 Button { id: clearAllBtn
                     width: parent.width
                     height: 30
