@@ -1,22 +1,18 @@
-import sys
 from PyQt5.QtWidgets import QGraphicsScene
 
 
 class Scene(QGraphicsScene):
 
     def __init__(self, parent):
-        # def sceneEventFilter(o, e):
-        #     print(o, e)
-        #     return False
-
         QGraphicsScene.__init__(self)
+
+        def sceneEventFilter(o, e):
+            print(o, e)
+            return False
         self.scene = QGraphicsScene(parent)
-        self.scene.installEventFilter(self)
 
-        # self.scene.eventFilter = sceneEventFilter
+        self.scene.installEventFilter(self.scene)
+        self.scene.eventFilter = sceneEventFilter
 
-    def eventFilter(self, source, event):
-        print(event)
-        print(source)
-
-        return False
+    def getScene(self):
+        return self.scene;

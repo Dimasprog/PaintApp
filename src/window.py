@@ -1,7 +1,7 @@
 import sys
 
-from PyQt5.QtCore import QUrl, Qt, pyqtSignal, pyqtSlot, QRectF, QLineF
-from PyQt5.QtGui import QPen, QPainter, QColor, QPainterPath
+from PyQt5.QtCore import QUrl, pyqtSlot, QRectF, QLineF
+from PyQt5.QtGui import QPen, QColor, QPainterPath
 from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, \
     QGraphicsItem, QGraphicsLineItem
@@ -46,7 +46,8 @@ class Window(QWidget):
     # scene-----------------------------------------------------------------------------
     def _init_window(self):
 
-        self.scene = Scene(self)
+        scene = Scene(self)
+        self.scene = scene.getScene()
         self.view = QGraphicsView(self.scene, self)
 
         box_layout = QHBoxLayout()
