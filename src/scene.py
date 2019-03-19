@@ -18,6 +18,8 @@ class Scene(QGraphicsScene):
         return self.scene
 
     def mousePressEvent(self, e):
+
+        # X and Y is Off the Axe
         if self.firstClick:
             self.firstClickPos = QCursor.pos()
             self.firstClick = False
@@ -30,8 +32,13 @@ class Scene(QGraphicsScene):
             print(self.secondClickPos, "Second Click")
 
 
-            # TODO: Add those
-            # line = QLineF(10, 10, self.firstClickPos, self.secondClickPos)
-            # line_item = QGraphicsLineItem(line)
-            # line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
-            # self.scene.addItem(line_item)
+            x1 = self.firstClickPos.x()
+            y1 = self.firstClickPos.y()
+            x2 = self.secondClickPos.x()
+            y2 = self.secondClickPos.y()
+            line = QLineF(float(x1), float(y1), float(x2), float(y2))
+            line_item = QGraphicsLineItem(line)
+            line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
+            self.scene.addItem(line_item)
+            self.firstClick = True
+            self.secondClick = False

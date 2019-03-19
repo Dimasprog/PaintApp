@@ -102,17 +102,17 @@ class Window(QWidget):
     #     painter = QPainter(self)
     #     painter.drawPath(self.path)
 
-    # def mouseMoveEvent(self, event):
-    #     print("Moved")
-    #     # self.path.lineTo(event.pos())
-    #     # self.newPoint.emit(event.pos())
-    #     # self.update()
-    #
-    #     globalPos = self.mapToGlobal(event.pos())
-    #     print("The mouse is at\nQPoint({0}, {1}) in widget coords, and\n QPoint({2}, {3}) in screen coords".format(
-    #         event.pos().x(), event.pos().y(), globalPos.x(),
-    #         globalPos.y()))
-    #     self.update()
+    def mouseMoveEvent(self, event):
+        print("Moved")
+        # self.path.lineTo(event.pos())
+        # self.newPoint.emit(event.pos())
+        # self.update()
+
+        globalPos = self.mapToGlobal(event.pos())
+        print("The mouse is at\nQPoint({0}, {1}) in widget coords, and\n QPoint({2}, {3}) in screen coords".format(
+            event.pos().x(), event.pos().y(), globalPos.x(),
+            globalPos.y()))
+        self.update()
 
 
 app = QApplication(sys.argv)
