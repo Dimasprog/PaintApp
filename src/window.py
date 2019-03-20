@@ -1,10 +1,12 @@
 import sys
 
-from PyQt5.QtCore import QUrl, Qt, pyqtSignal, pyqtSlot, QRectF, QLineF
-from PyQt5.QtGui import QPen, QPainter, QColor, QPainterPath
+from PyQt5.QtCore import QUrl, pyqtSlot, QRectF, QLineF
+from PyQt5.QtGui import QPen, QColor, QPainterPath
 from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QGraphicsView, QGraphicsScene, QGraphicsRectItem, \
     QGraphicsItem, QGraphicsLineItem
+
+from src.scene import Scene
 
 
 class Window(QWidget):
@@ -19,7 +21,6 @@ class Window(QWidget):
         self.justDoubleClicked = False
         self.brushSelected = False
         self.path = QPainterPath()
-        # self.setMouseTracking(True)
 
         self._define_ui()
         self._init_window()
@@ -44,10 +45,10 @@ class Window(QWidget):
 
     # scene-----------------------------------------------------------------------------
     def _init_window(self):
-        self.scene = QGraphicsScene(self)
 
+        scene = Scene(self)
+        self.scene = scene.getScene()
         self.view = QGraphicsView(self.scene, self)
-        # self.view.setMouseTracking(True)
 
         box_layout = QHBoxLayout()
         box_layout.addWidget(self.view)
@@ -83,20 +84,26 @@ class Window(QWidget):
             for l in list:
                 self.scene.removeItem(l)
 
-    def resizeEvent(self, event):
-        print("Resized to QSize({0}, {1})".format(event.size().width(), event.size().height()))
-        self.update()
-
-    def mouseDoubleClickEvent(self, event):
-        self.justDoubleClicked = True
-        print("Double click.")
-        self.update()
-
-    def mousePressEvent(self, event):
-        self.path.moveTo(event.pos())
-        self.update()
+    # def resizeEvent(self, event):
+    #     print("Resized to QSize({0}, {1})".format(event.size().width(), event.size().height()))
+    #     self.update()
+    #
+    # def mouseDoubleClickEvent(self, event):
+    #     self.justDoubleClicked = True
+    #     print("Double click.")
+    #     self.update()
+    #
+    # def mousePressEvent(self, event):
+    #     print("Single CLick")
+    #     self.path.moveTo(event.pos())
+    #     self.update()
+    #
+    # def paintEvent(self, event):
+    #     painter = QPainter(self)
+    #     painter.drawPath(self.path)
 
     def mouseMoveEvent(self, event):
+        print("Moved")
         # self.path.lineTo(event.pos())
         # self.newPoint.emit(event.pos())
         # self.update()
@@ -106,12 +113,6 @@ class Window(QWidget):
             event.pos().x(), event.pos().y(), globalPos.x(),
             globalPos.y()))
         self.update()
-
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.drawPath(self.path)
-
-
 
 
 app = QApplication(sys.argv)
