@@ -49,6 +49,7 @@ class Window(QWidget):
         scene = Scene(self)
         self.scene = scene.getScene()
         self.view = QGraphicsView(self.scene, self)
+        self.view.setSceneRect(0, 0, 1, 1)
 
         box_layout = QHBoxLayout()
         box_layout.addWidget(self.view)
