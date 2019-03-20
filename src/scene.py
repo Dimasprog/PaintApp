@@ -21,16 +21,15 @@ class Scene(QGraphicsScene):
 
         # X and Y is Off the Axe
         if self.firstClick:
-            self.firstClickPos = QCursor.pos()
+            self.firstClickPos = e.scenePos()
             self.firstClick = False
         else:
-            self.secondClickPos = QCursor.pos()
+            self.secondClickPos = e.scenePos()
             self.secondClick = True
 
         if self.secondClick:
             print(self.firstClickPos, "Prime Click")
             print(self.secondClickPos, "Second Click")
-
 
             x1 = self.firstClickPos.x()
             y1 = self.firstClickPos.y()
