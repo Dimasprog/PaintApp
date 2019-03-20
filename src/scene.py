@@ -7,37 +7,23 @@ class Scene(QGraphicsScene):
 
     def __init__(self, parent):
         QGraphicsScene.__init__(self)
-        self.scene = QGraphicsScene(parent)
-        self.scene.mousePressEvent = self.mousePressEvent
         self.firstClick = True
-        self.secondClick = False
-        self.firstClickPos = QCursor.pos()
-        self.secondClickPos = QCursor.pos()
+        self.firstClickPos = None
 
-    def getScene(self):
-        return self.scene
-
-    def mousePressEvent(self, e):
-
-        # X and Y is Off the Axe
+    def mousePressEvent(self, event):
         if self.firstClick:
-            self.firstClickPos = e.scenePos()
+            self.firstClickPos = event.scenePos()
             self.firstClick = False
-        else:
-            self.secondClickPos = e.scenePos()
-            self.secondClick = True
 
-        if self.secondClick:
-            print(self.firstClickPos, "Prime Click")
-            print(self.secondClickPos, "Second Click")
+    def clearLastItem(self):
+        self.removeItem(self.items()[len(self.items()) - 1])
+        self.update()
 
-            x1 = self.firstClickPos.x()
-            y1 = self.firstClickPos.y()
-            x2 = self.secondClickPos.x()
-            y2 = self.secondClickPos.y()
-            line = QLineF(float(x1), float(y1), float(x2), float(y2))
-            line_item = QGraphicsLineItem(line)
-            line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
-            self.scene.addItem(line_item)
-            self.firstClick = True
-            self.secondClick = False
+    def mouseMoveEvent(self, event):
+        line = QLineF(self.firstClickPos, event.scenePos())
+        line_item = QGraphicsLineItem(line)
+        line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
+        if len(self.items()) > 0:
+            self.clearLastItem()
+        self.addItem(line_item)
+        self.firstClick = True
