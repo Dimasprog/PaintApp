@@ -11,16 +11,16 @@ Item {
 
     /* SIGNALS */
 
-    signal drawRectangle(string s_color)
-    signal drawLine(string s_color)
+    signal setMode(string sMode)
     signal clearAll()
+    signal changeColor(string sColor)
+
 
     /* DESIGN */
-
     Rectangle { id: menu
         width: parent.width
         height: parent.height
-        color: "#fffa9e"
+        color: "#b6c6ed"
 
         ColumnLayout { id: col
             spacing: 15
@@ -43,6 +43,7 @@ Item {
 
                     onClicked: {
                         chosenColor.color = "white"
+                        changeColor(chosenColor.color)
                     }
                 }
 
@@ -58,6 +59,7 @@ Item {
 
                     onClicked: {
                         chosenColor.color = "black"
+                        changeColor(chosenColor.color)
                     }
                 }
 
@@ -73,6 +75,7 @@ Item {
 
                     onClicked: {
                         chosenColor.color = "#eeff00"
+                        changeColor(chosenColor.color)
                     }
                 }
 
@@ -88,6 +91,7 @@ Item {
 
                     onClicked: {
                         chosenColor.color = "red"
+                        changeColor(chosenColor.color)
                     }
                 }
 
@@ -103,6 +107,7 @@ Item {
 
                     onClicked: {
                         chosenColor.color = "blue"
+                        changeColor(chosenColor.color)
                     }
                 }
 
@@ -118,6 +123,7 @@ Item {
 
                     onClicked: {
                         chosenColor.color = "#630051"
+                        changeColor(chosenColor.color)
                     }
                 }
             }
@@ -138,12 +144,12 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: drawRectangle(chosenColor.color)
+                        onClicked: setMode("Rectangle")
                     }
                 }
 
                 Button {
-                    id: buttonLine
+                    id: buttonSegment
                     text: "/"
                     x: buttonRectangle.x + rectangleShapes.width / 3
                     y: + 1
@@ -152,18 +158,22 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: drawLine(chosenColor.color)
+                        onClicked: setMode("Segment")
                     }
                 }
 
                 Button {
                     id: buttonCurlyLine
                     text: "〰"
-                    x: buttonLine.x + rectangleShapes.width / 3
+                    x: buttonSegment.x + rectangleShapes.width / 3
                     y: + 1
                     width: rectangleShapes.width / 3 - 2
                     height: rectangleShapes.height - 2
 
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: setMode("Bezier")
+                    }
                 }
             }
 
