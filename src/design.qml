@@ -163,7 +163,7 @@ Item {
                 }
 
                 Button {
-                    id: buttonCurlyLine
+                    id: buttonDrawForever
                     text: "〰"
                     x: buttonSegment.x + rectangleShapes.width / 3
                     y: + 1
@@ -172,7 +172,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: setMode("Bezier")
+                        onClicked: setMode("Forever")
                     }
                 }
             }

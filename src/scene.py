@@ -20,6 +20,7 @@ class Scene(QGraphicsScene):
 
         self.default = "Default"
         self.mode = self.default
+        self.die = False
 
     def _define_ui(self):
         self.quick = QQuickWidget()
@@ -48,6 +49,7 @@ class Scene(QGraphicsScene):
         if self:
             for item in self.items():
                 self.removeItem(item)
+                self.die = False
                 self.update()
 
     def clearLastItem(self):
@@ -60,14 +62,18 @@ class Scene(QGraphicsScene):
     def mouseMoveEvent(self, event):
         self.currentPos = event.scenePos()
 
-        # Aici are loc schimbarea
-        if self.mode == "Segment":
-            self.drawSegment()
-        if self.mode == "Rectangle":
-            self.drawRect()
+        if self.die:
+            print("Rest in Peace")
+        else:
+            if self.mode == "Segment":
+                self.drawSegment()
+            if self.mode == "Rectangle":
+                self.drawRect()
+            if self.mode == "Forever":
+                self.drawForever()
 
     def mouseReleaseEvent(self, event):
-        pass
+        self.die = True
 
     def drawRect(self):
         rect = QRectF(self.originPos, self.currentPos)
@@ -86,3 +92,11 @@ class Scene(QGraphicsScene):
         if len(self.items()) > 0:
             self.clearLastItem()
         self.addItem(line_item)
+
+    def drawForever(self):
+        line = QLineF(self.originPos, self.currentPos)
+        line_item = QGraphicsLineItem(line)
+        line_item.setPen(self.pen)
+        line_item.setFlag(QGraphicsItem.ItemIsMovable, True)
+        self.addItem(line_item)
+        self.originPos = self.currentPos
