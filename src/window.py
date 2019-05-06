@@ -25,10 +25,6 @@ class Window(QWidget):
         box_layout.addWidget(self.scene.quick)
         self.setLayout(box_layout)
 
-    def handleStatusChange(self, status):
-        if status == self.quick.Error:
-            [print(e.toString()) for e in self.quick.errors()]
-
 
 app = QApplication(sys.argv)
 window = Window()

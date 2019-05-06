@@ -3,210 +3,191 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.1
 
-
-Item {
-
+Rectangle {
     id: main
     width: 220
+    color: "#b6c6ed"
 
-    /* SIGNALS */
+    property int shapeRectSize: main.width / 3 - 10
 
-    signal setMode(string sMode)
-    signal clearAll()
-    signal changeColor(string sColor)
+    signal changeColor(string colorName)
+    signal setShape(string shape)
+    signal clear()
 
+    function getColor(index) {
+        if (index == 0)
+            return "red"
+        if (index == 1)
+            return "black"
+        if (index == 2)
+            return "blue"
+        if (index == 3)
+            return "purple"
+        if (index == 4)
+            return "green"
+        if (index == 5)
+            return "yellow"
+    }
 
-    /* DESIGN */
-    Rectangle { id: menu
-        width: parent.width
-        height: parent.height
-        color: "#b6c6ed"
+    Column {
+        spacing: 20
+        anchors.horizontalCenter: parent.horizontalCenter
 
-        ColumnLayout { id: col
-            spacing: 15
+        Rectangle {
+            id: spanRect
+            color: main.color
+            height: 1
+            width: 10
+        }
+
+        Rectangle {
+            id: colorPicker
+            width: main.width - 20
+            height: 30
+            color: "white"
+
+            ListView {
+                id: listView
+                anchors.fill: parent
+                model: 6
+                orientation: ListView.Horizontal
+
+                delegate: Rectangle {
+                    width: colorPicker.width / 6
+                    height: colorPicker.height
+                    color: getColor(index)
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onEntered: parent.opacity =  0.4
+                        onExited: parent.opacity =  1
+                        onClicked: {
+                            chosenColor.color = parent.color
+                            changeColor(chosenColor.color)
+                        }
+                    }
+                }
+            }
+        }
+
+        Row {
             anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 5
+
             Rectangle {
-                Layout.preferredWidth: main.width - 10
-                Layout.preferredHeight: 30
-                color: "white"
-                border.color: "black"
-
-                Button { id: button1
-                    x: parent.x + 1
-                    y: parent.y + 1
-                    width: parent.width / 6
-                    height: parent.height - 2
-
-                    background: Rectangle {
-                        color: "white"
-                    }
-
-                    onClicked: {
-                        chosenColor.color = "white"
-                        changeColor(chosenColor.color)
-                    }
-                }
-
-                Button { id: button2
-                    x: button1.x + parent.width / 6
-                    y: button1.y
-                    width: parent.width / 6
-                    height: parent.height - 2
-
-                    background: Rectangle {
-                        color: "black"
-                    }
-
-                    onClicked: {
-                        chosenColor.color = "black"
-                        changeColor(chosenColor.color)
-                    }
-                }
-
-                Button { id: button3
-                    x: button2.x + parent.width / 6
-                    y: button2.y
-                    width: parent.width / 6
-                    height: parent.height - 2
-
-                    background: Rectangle {
-                        color: "#eeff00" // yellow
-                    }
-
-                    onClicked: {
-                        chosenColor.color = "#eeff00"
-                        changeColor(chosenColor.color)
-                    }
-                }
-
-                Button { id: button4
-                    x: button3.x + parent.width / 6
-                    y: button3.y
-                    width: parent.width / 6
-                    height: parent.height - 2
-
-                    background: Rectangle {
-                        color: "red"
-                    }
-
-                    onClicked: {
-                        chosenColor.color = "red"
-                        changeColor(chosenColor.color)
-                    }
-                }
-
-                Button { id: button5
-                    x: button4.x + parent.width / 6
-                    y: button4.y
-                    width: parent.width / 6
-                    height: parent.height - 2
-
-                    background: Rectangle {
-                        color: "blue"
-                    }
-
-                    onClicked: {
-                        chosenColor.color = "blue"
-                        changeColor(chosenColor.color)
-                    }
-                }
-
-                Button { id: button6
-                    x: button5.x + parent.width / 6
-                    y: button5.y
-                    width: parent.width / 6 - 2
-                    height: parent.height - 2
-
-                    background: Rectangle {
-                        color: "#630051" // violet
-                    }
-
-                    onClicked: {
-                        chosenColor.color = "#630051"
-                        changeColor(chosenColor.color)
-                    }
-                }
-            }
-
-            Rectangle { id: rectangleShapes
-                Layout.preferredWidth: main.width - 10
-                Layout.preferredHeight: menu.width / 3
+                id: buttonRectangle
                 color: "black"
-                border.color: "black"
+                width: shapeRectSize
+                height: buttonRectangle.width
+                border.width: 2
 
-                Button {
-                    id: buttonRectangle
-                    text: "☐"
-                    x: rectangleShapes.x + 1
-                    y: + 1
-                    width: rectangleShapes.width / 3 - 2
-                    height: rectangleShapes.height - 2
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: setMode("Rectangle")
-                    }
-                }
-
-                Button {
-                    id: buttonSegment
-                    text: "/"
-                    x: buttonRectangle.x + rectangleShapes.width / 3
-                    y: + 1
-                    width: rectangleShapes.width / 3 - 2
-                    height: rectangleShapes.height - 2
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: setMode("Segment")
-                    }
-                }
-
-                Button {
-                    id: buttonDrawForever
-                    text: "〰"
-                    x: buttonSegment.x + rectangleShapes.width / 3
-                    y: + 1
-                    width: rectangleShapes.width / 3 - 2
-                    height: rectangleShapes.height - 2
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: setMode("Forever")
-                    }
-                }
-            }
-
-            RowLayout { id: squareDisplayColor
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 10
-
-                TextArea {
-                    text: "Color: "
-                }
-                Rectangle { id: chosenColor
-                    Layout.preferredWidth: 40
-                    Layout.preferredHeight: 40
-                    color: "black"
-                    border.color: "black"
-                    radius: 20
-                }
-            }
-
-            Rectangle { id: clearAllButtonSection
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: parent.width - 10
-                Layout.preferredHeight: 30
-                Button { id: clearAllBtn
-                    width: parent.width
-                    height: 30
-                    text: "Clear All"
+                Image {
+                    anchors.centerIn: parent
+                    sourceSize.width: parent.width - 2
+                    sourceSize.height: parent.height - 2
+                    source: "img/square.png"
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: clearAll()
+                    hoverEnabled: true
+                    onEntered: parent.border.color = main.color
+                    onPressed: parent.border.color = "red"
+                    onReleased: parent.border.color = "black"
+                    onExited: parent.border.color = "black"
+                    onClicked: setShape("rectangle")
                 }
+            }
+
+            Rectangle {
+                id: buttonLine
+                color: "black"
+                width: shapeRectSize
+                height: buttonLine.width
+
+                Image {
+                    anchors.centerIn: parent
+                    sourceSize.width: parent.width - 2
+                    sourceSize.height: parent.height - 2
+                    source: "img/line.png"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: parent.border.color = main.color
+                    onPressed: parent.border.color = "red"
+                    onReleased: parent.border.color = "black"
+                    onExited: parent.border.color = "black"
+                    onClicked: setShape("line")
+                }
+            }
+
+            Rectangle {
+                id: buttonBrush
+                color: "black"
+                width: shapeRectSize
+                height: buttonBrush.width
+
+                Image {
+                    anchors.centerIn: parent
+                    sourceSize.width: parent.width - 2
+                    sourceSize.height: parent.height - 2
+                    source: "img/brush.png"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: parent.border.color = main.color
+                    onPressed: parent.border.color = "red"
+                    onReleased: parent.border.color = "black"
+                    onExited: parent.border.color = "black"
+                    onClicked: setShape("brush")
+                }
+            }
+        }
+
+        Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 5
+
+            TextArea {
+                text: "Color: "
+                font.pixelSize: 20
+                color: "black"
+            }
+
+            Rectangle {
+                id: chosenColor
+                width: 40
+                height: 40
+                color: "black"
+                border.color: "black"
+                radius: 20
+            }
+        }
+
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 140
+            height: 40
+            color: "#c4c4c4"
+            border.color: "black"
+
+            Text {
+                anchors.centerIn: parent
+                text: qsTr("Clear")
+                font.pixelSize: 20
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onEntered: parent.width = 136
+                onExited: parent.width = 140
+                onClicked: clear()
             }
         }
     }
